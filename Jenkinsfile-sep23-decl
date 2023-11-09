@@ -1,7 +1,7 @@
 pipeline{
     agent any 
     tools{
-        maven 'maven3.9.4'
+        maven 'Maven3.9.5'
     }
     //options{}
     //triggers{}
@@ -9,7 +9,7 @@ pipeline{
       stage('1.CloneCode'){
         steps{
             sh "echo 'cloning the latest application version' "
-            git "https://github.com/LandmakTechnology/maven-web-application"
+            git "https://github.com/Raissa2B8/maven-web-application"
         }
       }
       stage('2.mvnBuild'){
@@ -32,7 +32,7 @@ pipeline{
       }
       stage('5.Deploy2UAT'){
         steps{
-            deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://34.219.51.216:8177/')], contextPath: null, war: 'target/*war'
+            deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://18.214.36.205:8177/')], contextPath: null, war: 'target/*war'
         }
       }
       stage('6.ManualApproval'){
@@ -45,36 +45,36 @@ pipeline{
       }
       stage('7.Deploy2Prod'){
         steps{
-            deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://34.219.51.216:8177/')], contextPath: null, war: 'target/*war'
+          deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://18.214.36.205:8177/')], contextPath: null, war: 'target/*war'
          }
       }
     }
     post{
         always{
-  emailext body: '''Hi Team,
+  emailext body: '''Hi team,
 
-  The build and Deployment status for is a success.
+  The build and Deployment status for Tesla-app follows.
 
   Regards,
-  Landmark Technologies ''', recipientProviders: [buildUser(), contributor(), developers(), requestor()], subject: 'build and deployment status', to: 'mylandmarktech@gmail.com'
-
+  Norka Technologies''', recipientProviders: [buildUser(), developers(), contributor()], subject: 'build ans deployment status', to: 'rvtapchom@gmail.com'
+        
         }
         success{
-  emailext body: '''Hi Team,
+  emailext body: '''Hi team,
 
   The build and Deployment is a success.
 
   Regards,
-  Landmark Technologies ''', recipientProviders: [buildUser(), contributor(), developers(), requestor()], subject: 'build and deployment status', to: 'mylandmarktech@gmail.com'
-
+  Norka Technologies''', recipientProviders: [buildUser(), developers(), contributor()], subject: 'build ans deployment status', to: 'rvtapchom@gmail.com'
+       
         }
         failure{
-  emailext body: '''Hi Team,
+  emailext body: '''Hi team,
 
   The build and Deployment failed.
 
   Regards,
-  Landmark Technologies ''', recipientProviders: [buildUser(), contributor(), developers(), requestor()], subject: 'build and deployment status', to: 'mylandmarktech@gmail.com'
+  Norka Technologies''', recipientProviders: [buildUser(), developers(), contributor()], subject: 'build ans deployment status', to: 'rvtapchom@gmail.com'
 
         }
     }
